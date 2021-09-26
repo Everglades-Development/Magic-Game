@@ -1,6 +1,9 @@
 import pygame
 from entity import * 
 from mainmenu import *
+from pygame.locals import *
+from spritesheet import * 
+
 
 
 class Game():
@@ -20,8 +23,12 @@ class Game():
         self.currentMenu = self.main_menu
 
     def loop(self):
+        self.tiles = Spritesheet('Assets/Images/global.png', 16, 16, 10, 10)
+        global resize
+        resize = False
+        curr_scale = 1
         screen_space = pygame.sprite.Group()
-        sun = Entity(100,100,"Assets/Images/sun_1.png")
+        sun = Entity(100,100,"Assets/Images/global.png")
         screen_space.add(sun)
         while self.playing:
             keys = pygame.key.get_pressed()
@@ -37,12 +44,16 @@ class Game():
                 sun.x += 1
             if keys[pygame.K_a]:
                 sun.x -= 1
+
             #sun.x, sun.y = pygame.mouse.get_pos()
             
             self.display.fill((0,100,0))
             self.window.blit(self.display, (0,0))
-            screen_space.draw(self.window)
-            screen_space.update()
+            #screen_space.draw(self.window)
+            #screen_space.update()
+
+            #self.window.blit(self.tiles.getTile(1,2), (72, 72))
+ 
             pygame.display.update()
 
 
@@ -51,6 +62,7 @@ class Game():
 
 
     def checkEvents(self):
+        global resize
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
@@ -65,6 +77,7 @@ class Game():
                 if event.key == pygame.K_UP:
                     self.UP_KEY = True
 
+    
     def resetKeys(self):
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
 
