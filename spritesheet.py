@@ -1,25 +1,20 @@
 import pygame
-import json
 
 class Spritesheet:
-    def __init__(self, filename):
-        self.filename = filename
-        self.sprite_sheet = pygame.image.load(filename).convert()
-        self.meta_data = self.filename.replace('png', 'json')
-        with open(self.meta_data) as f:
-            self.data = json.load(f)
-        f.close()
+    def __init__(self, filename, width, height, rows, cols):
+        image = pygame.image.load(filename).convert()
+        self.tile_table = []
+        for tile_x in range (0, cols):
+            line = []
+            self.tile_table.append(line)
+            for tile_y in range(0, rows):
+                rect = (tile_x * width, tile_y * height, width, height)
+                line.append(image.pygame.Surface.subsurface(rect))
 
+    def getTile(self, x, y):
+        return self.tile_table[x][y]
 
-
-    def get_sprite(self, x, y, w, h):
-        sprite = pygame.Surface((w, h))
-        sprite.set_colorkey((0,0,0))
-        sprite.blit(self.sprite_sheet,(0, 0),(x, y, w, h))
-        return sprite
-
-    def parse_sprite(self, name):
-        sprite = self.data['frames'][name]['frame']
-        x, y, w, h = sprite["x"], sprite["y"], sprite["w"], sprite["h"]
-        image = self.get_sprite(x, y, w, h)
-        return image
+    def draw(self, screen):
+        for x, row in enumerate(self.tile_table):
+            for y, tile in enumerate(row):
+                screen.blit(tile, (x * 72, y * 72))
