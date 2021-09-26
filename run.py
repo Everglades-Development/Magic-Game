@@ -1,3 +1,3 @@
 import subprocess
 
-subprocess.Popen('python Scripts/mainmenu.py', shell=False)
+subprocess.Popen('python main.py', shell=False)
