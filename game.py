@@ -1,4 +1,5 @@
 import pygame
+from entity import * 
 from mainmenu import *
 
 
@@ -10,6 +11,7 @@ class Game():
         self.DISPLAY_W, self.DISPLAY_H = 1280, 720
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
         self.window = pygame.display.set_mode(((self.DISPLAY_W,self.DISPLAY_H)))
+        self.title = pygame.display.set_caption("Magic Game")
         self.font_name = 'Assets\\fonts\\chubbyChoo.ttf'
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
         self.main_menu = MainMenu(self)
@@ -18,13 +20,32 @@ class Game():
         self.currentMenu = self.main_menu
 
     def loop(self):
+        screen_space = pygame.sprite.Group()
+        sun = Entity(100,100,"Assets/Images/sun_1.png")
+        screen_space.add(sun)
         while self.playing:
+            keys = pygame.key.get_pressed()
             self.checkEvents()
             if self.BACK_KEY:
                 self.playing= False
-            self.display.fill(self.BLACK)
+
+            if keys[pygame.K_w]:
+                sun.y -= 1
+            if keys[pygame.K_s]:
+                sun.y += 1
+            if keys[pygame.K_d]:
+                sun.x += 1
+            if keys[pygame.K_a]:
+                sun.x -= 1
+            #sun.x, sun.y = pygame.mouse.get_pos()
+            
+            self.display.fill((0,100,0))
             self.window.blit(self.display, (0,0))
+            screen_space.draw(self.window)
+            screen_space.update()
             pygame.display.update()
+
+
             self.resetKeys()
 
 
