@@ -27,4 +27,4 @@ This means:
 If you include pyglet, arcade, etc. your PR will be deleeted. Pygame is a good enough engine to create our planned game. 
 
 ## Final Notes
-If you would like your name to appear in the game's credits, add it to the [list of contributors](https://github.com/Anuken/Mindustry/blob/master/core/assets/contributors) as part of your PR.
+If you would like your name to appear in the game's credits, add it to the [list of contributors](https://github.com/Everglades-Development/Magic-GameUpd/blob/master/core/assets/contributors) as part of your PR.
